@@ -93,6 +93,7 @@ assig =
 {assig} functionAssig();
 . printf("%s: error: %s :Formato Lexico No Valido\n\n",nameFile,yytext);
 %%
+//Hernandez Jaimes Rogelio Yael
 int yywrap(){}
 int main(int argc, char *argv[]){
 
