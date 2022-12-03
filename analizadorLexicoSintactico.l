@@ -502,18 +502,19 @@ void otraFunc(){
 //Produccion 4:
 Func(){
     Tipo();
-    if(nodo.atomo=="b" || nodo.atomo=="g" || nodo.atomo=="#" || nodo.atomo=="y" || nodo.atomo=="x"){
+    if(node.atomo=="b" || node.atomo=="g" || node.atomo=="#" || node.atomo=="y" || node.atomo=="x"){
         nextAtom();
-        if(nodo.atomo=="i"){
+        if(node.atomo=="i"){
             nextAtom();
-            if(nodo.atomo=="("){
+            if(node.atomo=="("){
                 nextAtom();
                 Param();
-                if(nodo.atomo==")"){
-                    if(nodo.atomo=="{"){
+                if(node.atomo==")"){
+                    if(node.atomo=="{"){
                         Cuerpo();
-                        if(nodo.atomo=="}"){
-                            
+                        if(node.atomo=="}"){
+                            nextAtom();
+                            return;
                         }else{
                             //rechaza();
                             return;
