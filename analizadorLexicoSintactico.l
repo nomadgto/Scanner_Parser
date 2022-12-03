@@ -61,8 +61,9 @@ void saveReference(struct token **headNode, struct token **node);
 void Program(struct token **node);
 void otraFunc(struct token **node);
 void Func(struct token **node);
+void Param(struct token **node);
 void Tipo(struct token **node);
-
+void rechaza(char *a, char *b);
 /*  Apuntadores de la tabla de tokens, tablas de literales y tabla de simbolos.
     Arreglos de los catalogos de palabras reservadas y operadores relacionales.
     Apuntador con el nombre del archivo de entrada.
@@ -515,11 +516,11 @@ void nextAtom(struct token **node){
     *node = (*node)->ptrNext;
 }
 
-//Produccion 1:
+
 void Program(struct token **node){
     if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         Func(node);
-        //otraFunc(node);
+        otraFunc(node);
     }else{
         printf("Rechaza"); //Test
     }
@@ -527,7 +528,6 @@ void Program(struct token **node){
     printf("\nAcepta\n"); //Test
 }
 
-//Produccion 2:
 void otraFunc(struct token **node){
     if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         Func(node);
@@ -538,7 +538,7 @@ void otraFunc(struct token **node){
     }
 }
 
-//Produccion 4:
+
 void Func(struct token **node){
     if((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         Tipo(node);
@@ -576,10 +576,33 @@ void Func(struct token **node){
     }
 }
 
+void Param(struct token **node){
+    if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+        Tipo(node);
+        if(strcmp((*node)->atomo,"i")==0){
+            nextAtom(node);
+            otroParam(node);
+        }else{
+            rechaza((*node)->atomo,"i");
+        }
+        nextAtom(node);
+    }else if(strcmp((*node)->atomo,")")==0){
+        //No se hace nada pues es una transición epsilon, dado su follow determinamos si "c" es el cs de esta produccion
+    }
+    else{
+        rechaza("b|g|#|y|x|)",(*node)->atomo);
+    }
+}
+
 void Tipo(struct token **node){
     if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         nextAtom(node);
     }else{
-        printf("Rechaza"); //Test
+        rechaza("b|g|#|y|x",(*node)->atomo);
     }
+}
+
+
+void rechaza(char *a, char *b){
+    printf("Error: Se esperaba %s en lugar de %s",a,b);
 }
