@@ -53,7 +53,15 @@ void deleteTable(struct node **headNode);
 void deleteLastToken(struct token **headToken);
 void deleteTokenTable(struct token **headToken);
 char *searchNodeTable(struct node **headNode, char* dataInput);
-void printStringAtoms(struct token **node);                         // Nueva Funcion Analizador Sintactico
+
+// Nuevas Funciones Analizador Sintactico
+void printStringAtoms(struct token **node);
+void nextAtom(struct token **node);
+void saveReference(struct token **headNode, struct token **node);
+void Program(struct token **node);
+void otraFunc(struct token **node);
+void Func(struct token **node);
+void Tipo(struct token **node);
 
 /*  Apuntadores de la tabla de tokens, tablas de literales y tabla de simbolos.
     Arreglos de los catalogos de palabras reservadas y operadores relacionales.
@@ -66,8 +74,11 @@ struct node *realNumConstTable = NULL;
 struct node *stringTable = NULL;
 char *catalogRelat[]={"<",">","<=",">=","==","!="};
 char *nameFile;
-char *atomsCatalogReser[]={"a","b","f","t","g","w","m","#","o","x","j","h","p","c","q","y","z"};    // Nueva Funcion Analizador Sintactico
-char *atomsCatalogRelat[]={"<",">","l","u","e","d"};                                                // Nueva Funcion Analizador Sintactico
+
+// Nuevas Estructuras Analizador Sintactico
+char *atomsCatalogReser[]={"a","b","f","t","g","w","m","#","o","x","j","h","p","c","q","y","z"};
+char *atomsCatalogRelat[]={"<",">","l","u","e","d"};
+struct token *referenceTokenTable = NULL;
 
 /* Expresiones Regulares de las 9 clases de componentes léxicos, junto con ER auxiliares en detectar errores
 */
@@ -110,9 +121,10 @@ int main(int argc, char *argv[]){
     yyin = fopen(srcPath,"r");
     outputFile = fopen("outputFile.txt","w");
     yylex();
-    //Program(); // Funcion por definir
+    saveReference(&referenceTokenTable,&tokenTable);        //Guardar la referencia del primer nodo de tokenTable
     printTables();                                          //Se imprimen las tablas en el archivo de salida
     fclose(outputFile);                                     //Se cierra el archivo de salida
+    Program(&tokenTable);                                   // Analisis Sintactico
     freeTables();                                           //Se libera la memoria reservada de las tablas
     return 0;
 }
@@ -492,51 +504,82 @@ char *searchNodeTable(struct node **headNode, char* dataInput){
 
 /* Funciones del Analizador Sintáctico Descendente Recursivo <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 */
+
+/*  Funcion guardar referencia del primer token den la tabla de Tokens.
+*/
+void saveReference(struct token **headNode, struct token **node){
+    *headNode=*node;
+}
+
+void nextAtom(struct token **node){
+    *node = (*node)->ptrNext;
+}
+
+//Produccion 1:
+void Program(struct token **node){
+    if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+        Func(node);
+        //otraFunc(node);
+    }else{
+        printf("Rechaza"); //Test
+    }
+    *node = referenceTokenTable;
+    printf("\nAcepta\n"); //Test
+}
+
 //Produccion 2:
-void otraFunc(){
-    Func();
-    otraFunc();
-    return;
+void otraFunc(struct token **node){
+    if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+        Func(node);
+        otraFunc(node);
+    }else if (*node == NULL){
+    }else{
+        printf("Rechaza"); //Test
+    }
 }
 
 //Produccion 4:
-Func(){
-    Tipo();
-    if(node.atomo=="b" || node.atomo=="g" || node.atomo=="#" || node.atomo=="y" || node.atomo=="x"){
-        nextAtom();
-        if(node.atomo=="i"){
-            nextAtom();
-            if(node.atomo=="("){
-                nextAtom();
-                Param();
-                if(node.atomo==")"){
-                    if(node.atomo=="{"){
+void Func(struct token **node){
+    if((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+        Tipo(node);
+        if (strcmp((*node)->atomo,"i") == 0){
+            printf("%s despues de comparacion \n",(*node)->atomo); //Test
+            nextAtom(node);
+            if(strcmp((*node)->atomo,"(") == 0){
+                printf("%s despues de comparacion \n",(*node)->atomo); //Test
+                //nextAtom(node);
+                //Param();
+                /*
+                if((*node)->atomo==")"){
+                    if((*node)->atomo=="{"){
                         Cuerpo();
-                        if(node.atomo=="}"){
-                            nextAtom();
-                            return;
+                        if((*node)->atomo=="}"){
+                            nextAtom(node);
                         }else{
                             //rechaza();
-                            return;
                         }
                     }else{
                         //rechaza();
-                        return;
                     }
                 }else{
                     //rechaza();
-                    return;
                 }
+                */
             }else{
                 //rechaza();
-                return;
             }
         }else{
             //rechaza();
-            return;
         }
     }else{
         //rechaza();
-        return;
+    }
+}
+
+void Tipo(struct token **node){
+    if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+        nextAtom(node);
+    }else{
+        printf("Rechaza"); //Test
     }
 }
