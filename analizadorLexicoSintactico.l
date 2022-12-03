@@ -492,3 +492,50 @@ char *searchNodeTable(struct node **headNode, char* dataInput){
 
 /* Funciones del Analizador Sintáctico Descendente Recursivo <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 */
+//Produccion 2:
+void otraFunc(){
+    Func();
+    otraFunc();
+    return;
+}
+
+//Produccion 4:
+Func(){
+    Tipo();
+    if(nodo.atomo=="b" || nodo.atomo=="g" || nodo.atomo=="#" || nodo.atomo=="y" || nodo.atomo=="x"){
+        nextAtom();
+        if(nodo.atomo=="i"){
+            nextAtom();
+            if(nodo.atomo=="("){
+                nextAtom();
+                Param();
+                if(nodo.atomo==")"){
+                    if(nodo.atomo=="{"){
+                        Cuerpo();
+                        if(nodo.atomo=="}"){
+                            
+                        }else{
+                            //rechaza();
+                            return;
+                        }
+                    }else{
+                        //rechaza();
+                        return;
+                    }
+                }else{
+                    //rechaza();
+                    return;
+                }
+            }else{
+                //rechaza();
+                return;
+            }
+        }else{
+            //rechaza();
+            return;
+        }
+    }else{
+        //rechaza();
+        return;
+    }
+}
