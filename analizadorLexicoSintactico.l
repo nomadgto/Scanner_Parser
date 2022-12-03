@@ -15,6 +15,7 @@
 struct token{
     int class;
     char *value;
+    char *atomo;
     struct token *ptrNext;
 };
 
@@ -43,7 +44,7 @@ void functionRelat(void);
 void functionAssig(void);
 void printTables(void);
 void freeTables(void);
-void insertToken(struct token **headToken, int classInput, char *dataInput);
+void insertToken(struct token **headToken, int classInput, char *dataInput, char *atomInput);
 char *insertNode(struct node **headNode, char *dataInput);
 void printTable(struct node **node, char *nameTable);
 void printTokenTable(struct token **node);
@@ -52,6 +53,7 @@ void deleteTable(struct node **headNode);
 void deleteLastToken(struct token **headToken);
 void deleteTokenTable(struct token **headToken);
 char *searchNodeTable(struct node **headNode, char* dataInput);
+void printStringAtoms(struct token **node);                         // Nueva Funcion Analizador Sintactico
 
 /*  Apuntadores de la tabla de tokens, tablas de literales y tabla de simbolos.
     Arreglos de los catalogos de palabras reservadas y operadores relacionales.
@@ -64,6 +66,8 @@ struct node *realNumConstTable = NULL;
 struct node *stringTable = NULL;
 char *catalogRelat[]={"<",">","<=",">=","==","!="};
 char *nameFile;
+char *atomsCatalogReser[]={"a","b","f","t","g","w","m","#","o","x","j","h","p","c","q","y","z"};    // Nueva Funcion Analizador Sintactico
+char *atomsCatalogRelat[]={"<",">","l","u","e","d"};                                                // Nueva Funcion Analizador Sintactico
 
 /* Expresiones Regulares de las 9 clases de componentes léxicos, junto con ER auxiliares en detectar errores
 */
@@ -128,7 +132,7 @@ void functionReser(void){
     }
     position = (char*) malloc(sizeof(positionSearch));
     sprintf(position, "%d", positionSearch);
-    insertToken(&tokenTable,0,position);
+    insertToken(&tokenTable,0,position,atomsCatalogReser[positionSearch]);
 }
 
 /*  Funcion ER de Identificadores. Busca en la tabla de simbolos la ER encontrada pasando
@@ -144,9 +148,9 @@ void functionIdent(void){
     char *positionSearch = searchNodeTable(&symbolTable,yytext);
     if (strcmp(positionSearch,"-1") == 0){
         char *position = insertNode(&symbolTable,yytext);
-        insertToken(&tokenTable,1,position);
+        insertToken(&tokenTable,1,position,"i");
     } else {
-        insertToken(&tokenTable,1,positionSearch);
+        insertToken(&tokenTable,1,positionSearch,"i");
     }
 }
 
@@ -154,7 +158,7 @@ void functionIdent(void){
     la tabla de tokens, la clase 2 y la ER encontrada.
 */
 void functionNumConstInt(void){
-    insertToken(&tokenTable,2,yytext);
+    insertToken(&tokenTable,2,yytext,"n");
 }
 
 /*  Funcion ER de Constantes Numéricas Reales. Se inserta la ER encontrada en la tabla 
@@ -164,7 +168,7 @@ void functionNumConstInt(void){
 */
 void functionNumConstReal(void){
     char *position = insertNode(&realNumConstTable,yytext);
-    insertToken(&tokenTable,3,position);
+    insertToken(&tokenTable,3,position,"r");
 }
 
 /*  Funcion ER de Constantes Cadenas. Se inserta la ER encontrada en la tabla 
@@ -174,21 +178,21 @@ void functionNumConstReal(void){
 */
 void functionStr(void){
     char *position = insertNode(&stringTable,yytext);
-    insertToken(&tokenTable,4,position);
+    insertToken(&tokenTable,4,position,"s");
 }
 
 /*  Funcion ER de Simbolos Especiales. Se inserta el token pasando el apuntador de
     la tabla de tokens, la clase 5 y la ER encontrada.
 */
 void functionSpec(void){
-    insertToken(&tokenTable,5,yytext);
+    insertToken(&tokenTable,5,yytext,yytext);
 }
 
 /*  Funcion ER de Operadores Aritmeticos. Se inserta el token pasando el apuntador de
     la tabla de tokens, la clase 6 y la ER encontrada.
 */
 void functionArith(void){
-    insertToken(&tokenTable,6,yytext);
+    insertToken(&tokenTable,6,yytext,yytext);
 }
 
 /*  Funcion ER de Operadores Relacionales. Busca en el catalogo de operadores 
@@ -206,20 +210,21 @@ void functionRelat(void){
     }
     position = (char*) malloc(sizeof(positionSearch));
     sprintf(position, "%d", positionSearch);
-    insertToken(&tokenTable,7,position);
+    insertToken(&tokenTable,7,position,atomsCatalogRelat[positionSearch]);
 }
 
 /*  Funcion ER de Operador de Asignacion. Se inserta el token pasando el apuntador de
     la tabla de tokens, la clase 8 y la ER encontrada.
 */
 void functionAssig(void){
-    insertToken(&tokenTable,8,yytext);
+    insertToken(&tokenTable,8,yytext,yytext);
 }
 
 /*  Funcion Imprimir Tablas. Impresion de la tabla de tokens, tabla de simbolos y 
     tablas de literales en el archivo de salida.
 */
 void printTables(void){
+    printStringAtoms(&tokenTable);
     printTokenTable(&tokenTable);
     printTable(&symbolTable, "Symbols");
     printTable(&realNumConstTable, "Real Numeric Constants");
@@ -240,7 +245,7 @@ void freeTables(void){
     Recibe como parametro la referencia de la tabla de tokens, la clase, y el indice de la
     tabla de simbolos o tabla de literales correspondiente o el valor directo de la ER.
 */
-void insertToken(struct token **headToken, int classInput, char *dataInput){
+void insertToken(struct token **headToken, int classInput, char *dataInput, char *atomInput){
     
     struct token *currentToken;
     struct token *previousToken;
@@ -249,8 +254,11 @@ void insertToken(struct token **headToken, int classInput, char *dataInput){
     if (newToken != NULL){
         
         int size = strlen(dataInput);
+        int sizeAtom = strlen(atomInput);
         newToken->value = (char*) malloc(size*sizeof(char));
+        newToken->atomo = (char*) malloc(sizeAtom*sizeof(char));
         strcpy(newToken->value, dataInput);
+        strcpy(newToken->atomo, atomInput);
 
         newToken->class = classInput;
         previousToken = NULL;
@@ -325,6 +333,7 @@ char *insertNode(struct node **headNode, char *dataInput){
     Si la tabla esta vacia imprime el mensaje.
 */
 void printTable(struct node **node, char *nameTable){
+    struct node *headNode = *node;
     if (*node == NULL){
         fprintf(outputFile,"\n>> Empty %s Table.\n",nameTable);
     } else {
@@ -334,6 +343,26 @@ void printTable(struct node **node, char *nameTable){
             *node = (*node)->ptrNext;
         }
     }
+    *node=headNode;
+}
+
+/*  Funcion Imprimir Cadena de Atomos. Impresion de la cadena de atomos en el archivo de salida.
+    Recibe como parametro solo la referencia de la tabla de tokens.
+    Si la tabla esta vacia imprime el mensaje.
+*/
+void printStringAtoms(struct token **node){
+    struct token *headToken = *node;
+    if (*node == NULL) {
+        fprintf(outputFile,"\n>> Empty String of atoms.\n");
+    } else {
+        fprintf(outputFile,"\n>> String of atoms:\n");
+        while (*node != NULL){
+            fprintf(outputFile,"%s",(*node)->atomo);
+            *node = (*node)->ptrNext;
+        }
+    }
+    fprintf(outputFile,"\n");
+    *node=headToken;
 }
 
 /*  Funcion Imprimir Tabla de Tokens. Impresion de la tabla de tokens en el archivo de salida.
@@ -341,6 +370,7 @@ void printTable(struct node **node, char *nameTable){
     Si la tabla esta vacia imprime el mensaje.
 */
 void printTokenTable(struct token **node){
+    struct token *headToken = *node;
     if (*node == NULL) {
         fprintf(outputFile,"\n>> Empty Tokens Table.\n");
     } else {
@@ -350,6 +380,7 @@ void printTokenTable(struct token **node){
             *node = (*node)->ptrNext;
         }
     }
+    *node=headToken;
 }
 
 /*  Funcion Eliminar Ultimo Nodo de Tabla. Elimina el ultimo nodo de la tabla de simbolos o tablas 
@@ -458,3 +489,6 @@ char *searchNodeTable(struct node **headNode, char* dataInput){
   sprintf(positionString, "%d", -1);
   return positionString;
 }
+
+/* Funciones del Analizador Sintáctico Descendente Recursivo <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+*/
