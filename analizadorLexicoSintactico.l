@@ -62,8 +62,10 @@ void Program(struct token **node);
 void otraFunc(struct token **node);
 void Func(struct token **node);
 void Param(struct token **node);
+void otroParam(struct token **node);
 void Tipo(struct token **node);
 void rechaza(char *a, char *b);
+
 /*  Apuntadores de la tabla de tokens, tablas de literales y tabla de simbolos.
     Arreglos de los catalogos de palabras reservadas y operadores relacionales.
     Apuntador con el nombre del archivo de entrada.
@@ -512,72 +514,90 @@ void saveReference(struct token **headNode, struct token **node){
     *headNode=*node;
 }
 
+/*  Funcion para pasar al siguiente atomo de la cadena de atomos.
+*/
 void nextAtom(struct token **node){
     *node = (*node)->ptrNext;
 }
 
-
+//Produccion 1:
 void Program(struct token **node){
     if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         Func(node);
         otraFunc(node);
     }else{
-        printf("Rechaza"); //Test
+        rechaza("b|g|#|y|x",(*node)->atomo);
     }
-    *node = referenceTokenTable;
-    printf("\nAcepta\n"); //Test
+
+    if (*node == NULL){
+        *node = referenceTokenTable;
+        printf("\nSe acepta la cadena de atomos\n"); //Test
+    } else {
+        *node = referenceTokenTable;
+        printf("\nSe rechaza la cadena de atomos\n"); //Test
+    }
 }
 
+//Produccion 2,3:
 void otraFunc(struct token **node){
-    if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+    if (*node == NULL){
+        //No se hace nada pues es una transición epsilon, dado su follow determinamos si "c" es el cs de esta produccion
+    }else if ( (strcmp((*node)->atomo,"b") == 0)
+         ||(strcmp((*node)->atomo,"g") == 0)
+         ||(strcmp((*node)->atomo,"#") == 0)
+         ||(strcmp((*node)->atomo,"y") == 0)
+         ||(strcmp((*node)->atomo,"x") == 0) ){
         Func(node);
         otraFunc(node);
-    }else if (*node == NULL){
     }else{
-        printf("Rechaza"); //Test
+        rechaza("b|g|#|y|x|EOF",(*node)->atomo);
     }
 }
 
-
+//Produccion 4:
 void Func(struct token **node){
     if((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         Tipo(node);
         if (strcmp((*node)->atomo,"i") == 0){
-            printf("%s despues de comparacion \n",(*node)->atomo); //Test
             nextAtom(node);
             if(strcmp((*node)->atomo,"(") == 0){
-                printf("%s despues de comparacion \n",(*node)->atomo); //Test
-                //nextAtom(node);
-                //Param();
-                /*
-                if((*node)->atomo==")"){
-                    if((*node)->atomo=="{"){
-                        Cuerpo();
-                        if((*node)->atomo=="}"){
+                nextAtom(node);
+                Param(node);
+                if(strcmp((*node)->atomo,")") == 0){
+                    nextAtom(node);
+                    if(strcmp((*node)->atomo,"{") == 0){
+                        //Cuerpo(node);
+                        nextAtom(node);
+                        if(strcmp((*node)->atomo,"}") == 0){
                             nextAtom(node);
                         }else{
-                            //rechaza();
+                            rechaza("}",(*node)->atomo);
                         }
                     }else{
-                        //rechaza();
+                        rechaza("{",(*node)->atomo);
                     }
                 }else{
-                    //rechaza();
+                    rechaza(")",(*node)->atomo);
                 }
-                */
             }else{
-                //rechaza();
+                rechaza("(",(*node)->atomo);
             }
         }else{
-            //rechaza();
+            rechaza("i",(*node)->atomo);
         }
     }else{
-        //rechaza();
+        rechaza("b|g|#|y|x",(*node)->atomo);
     }
 }
 
+
+//Produccion 5,6:
 void Param(struct token **node){
-    if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
+    if ( (strcmp((*node)->atomo,"b") == 0)
+         ||(strcmp((*node)->atomo,"g") == 0)
+         ||(strcmp((*node)->atomo,"#") == 0)
+         ||(strcmp((*node)->atomo,"y") == 0)
+         ||(strcmp((*node)->atomo,"x") == 0) ){
         Tipo(node);
         if(strcmp((*node)->atomo,"i")==0){
             nextAtom(node);
@@ -586,7 +606,7 @@ void Param(struct token **node){
             rechaza((*node)->atomo,"i");
         }
         nextAtom(node);
-    }else if(strcmp((*node)->atomo,")")==0){
+    } else if (strcmp((*node)->atomo,")") == 0) {
         //No se hace nada pues es una transición epsilon, dado su follow determinamos si "c" es el cs de esta produccion
     }
     else{
@@ -594,6 +614,25 @@ void Param(struct token **node){
     }
 }
 
+//Produccion 7,8:
+void otroParam(struct token **node){
+    if (strcmp((*node)->atomo,",") == 0){
+        nextAtom(node);
+        Tipo(node);
+        if (strcmp((*node)->atomo,"i") == 0){
+            nextAtom(node);
+        }else{
+            rechaza("i",(*node)->atomo);
+        }
+        otroParam(node);
+    } else if (strcmp((*node)->atomo,")") == 0){
+
+    }else{
+        rechaza(",",(*node)->atomo);
+    }
+}
+
+//Produccion 13,14,15,16,17:
 void Tipo(struct token **node){
     if ((*node)->atomo=="b"||"g"||"#"||"y"||"x"){
         nextAtom(node);
@@ -602,7 +641,8 @@ void Tipo(struct token **node){
     }
 }
 
-
+/*  Funcion rechaza la cadena de atomos.
+*/
 void rechaza(char *a, char *b){
-    printf("Error: Se esperaba %s en lugar de %s",a,b);
+    printf("Error: Se esperaba %s en lugar de %s\n",a,b);
 }
