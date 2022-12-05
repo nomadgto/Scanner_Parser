@@ -1,4 +1,33 @@
 
+>> Symbols Table:
+ (0,$funUno)
+ (1,$NumReal)
+ (2,$OtroReal)
+ (3,$cadUno)
+ (4,$cadDos)
+ (5,$numUno)
+ (6,$numDos)
+ (7,$num)
+ (8,$funDos)
+ (9,$Num)
+ (10,$cadResult)
+ (11,$valor)
+
+>> Real Numeric Constants Table:
+ (0,27.5)
+ (1,28.5)
+ (2,7.5)
+
+>> String Constants Table:
+ (0,"Cadena #2")
+ (1,"Una cadena diferente…")
+ (2,"iguales!")
+ (3,"diferentes!")
+ (4,"rango de 2 a 4")
+ (5,"rango de 5 a 7")
+ (6,"rango de 8 a 10")
+ (7,"fuera de rango")
+
 >> Tokens Table:
  (0,15)
  (1,0)
@@ -202,31 +231,8 @@
  (5,;)
  (5,})
 
->> Symbols Table:
- (0,$funUno)
- (1,$NumReal)
- (2,$OtroReal)
- (3,$cadUno)
- (4,$cadDos)
- (5,$numUno)
- (6,$numDos)
- (7,$num)
- (8,$funDos)
- (9,$Num)
- (10,$cadResult)
- (11,$valor)
+>> String of atoms:
+yi(){xi=r,i;yi,i=s;bi=n,i,i;f(iur)w(iln)m{i=i+n\n;i=(n+i)^n;f(i>n)c;:}i=s;:j(i=n;iln;i=i+n){[i(i)]}f(iei)z(s);tz(s);:}#i(bi){yi;#i;h(i){an:an:an:i=s;qan:an:an:i=s;qan:an:an:i=s;qo:i=s;}i=i*r%n-i;z(i);}
 
->> Real Numeric Constants Table:
- (0,27.5)
- (1,28.5)
- (2,7.5)
+pruebaAnalSint.txt: message: "Programa fuente sintácticamente CORRECTO"
 
->> String Constants Table:
- (0,"Cadena #2")
- (1,"Una cadena diferente…")
- (2,"iguales!")
- (3,"diferentes!")
- (4,"rango de 2 a 4")
- (5,"rango de 5 a 7")
- (6,"rango de 8 a 10")
- (7,"fuera de rango")

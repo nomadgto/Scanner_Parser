@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 13
-#define YY_END_OF_BUFFER 14
+#define YY_NUM_RULES 14
+#define YY_END_OF_BUFFER 15
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,12 +362,12 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[103] =
     {   0,
-        0,    0,   14,   12,    1,    1,   12,   12,   12,    9,
-       12,    8,   12,    6,    6,   10,   11,   10,   12,   12,
-       12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
-        1,   10,    0,    0,    3,    0,    4,    0,    0,    6,
-        5,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    7,    0,    2,
+        0,    0,   15,   13,    2,    1,   13,   13,   13,   10,
+       13,    9,   13,    7,    7,   11,   12,   11,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+        2,   11,    0,    0,    4,    0,    5,    0,    0,    7,
+        6,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    8,    0,    3,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -419,18 +419,18 @@ static const YY_CHAR yy_meta[42] =
 
 static const flex_int16_t yy_base[107] =
     {   0,
-        0,    0,  170,  171,   40,   42,  154,  160,    0,  171,
-        0,  171,   35,   39,   43,  152,  151,  150,   46,  134,
-      135,  123,  129,   38,  139,  121,   49,  133,   37,  130,
-       61,  171,    0,  151,    0,  147,   54,   64,   69,   77,
-       58,  117,  127,  131,  115,  115,  116,  119,  116,  119,
-       51,  115,  123,   58,  112,  107,  136,  171,  115,  171,
-      109,  101,  111,  102,  110,  112,  108,  102,  106,  105,
-       99,   94,   93,  104,   92,   89,   85,   97,   96,   95,
-       84,   97,   94,   86,   82,   74,   81,   91,   90,   75,
-       72,   71,   77,   85,   68,   80,   65,   76,   70,   54,
+        0,    0,  166,  167,  163,  167,  149,  155,    0,  167,
+        0,  167,   31,   35,   39,  147,  146,  145,   42,  129,
+      130,  118,  124,   34,  134,  116,   45,  128,   33,  125,
+      149,  167,    0,  145,    0,  141,   48,   60,   65,   73,
+       51,  111,  121,  125,  109,  109,  110,  113,  110,  113,
+       45,  109,  117,   55,  106,  101,  130,  167,  109,  167,
+      103,   95,  105,   96,  104,  106,  102,   96,  100,   99,
+       93,   88,   87,   98,   86,   83,   79,   91,   90,   89,
+       78,   91,   88,   80,   76,   68,   75,   85,   84,   69,
+       66,   65,   71,   78,   61,   71,   53,   62,   53,   30,
 
-       59,  171,   91,   69,   95,   99
+       43,  167,   88,   61,   92,   96
     } ;
 
 static const flex_int16_t yy_def[107] =
@@ -449,60 +449,58 @@ static const flex_int16_t yy_def[107] =
       102,    0,  102,  102,  102,  102
     } ;
 
-static const flex_int16_t yy_nxt[213] =
+static const flex_int16_t yy_nxt[209] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   15,   16,   17,   18,    4,   19,   12,   12,
        20,   21,    4,    4,   22,    4,    4,   23,    4,   24,
        25,   26,   27,    4,   28,   29,   30,    4,    4,    4,
-        4,   31,   31,   31,   31,   37,   37,   37,   38,   39,
-       39,   39,   38,   40,   40,   40,   41,   41,   46,   41,
-       41,   52,   31,   31,   37,   37,   37,   53,   41,   41,
-       47,   68,   35,   54,   37,   37,   37,   55,   38,   39,
-       39,   39,   72,   60,   69,   50,   38,   40,   40,   40,
-       73,   33,  101,   33,   33,   36,   36,  100,   36,   57,
+        4,   37,   37,   37,   38,   39,   39,   39,   38,   40,
+       40,   40,   41,   41,   46,   41,   41,   52,   37,   37,
+       37,   41,   41,   53,   35,   68,   47,   60,  101,   54,
+       37,   37,   37,   55,   38,   39,   39,   39,   69,   72,
+      100,   50,   38,   40,   40,   40,   60,   73,   33,   99,
+       33,   33,   36,   36,   60,   36,   57,   98,   97,   57,
 
-       60,   99,   57,   60,   98,   97,   60,   60,   60,   60,
-       96,   95,   94,   60,   93,   60,   92,   91,   60,   90,
-       60,   89,   88,   87,   86,   85,   60,   60,   84,   83,
-       82,   60,   81,   80,   60,   60,   79,   78,   77,   76,
-       58,   75,   74,   71,   70,   67,   66,   65,   64,   63,
-       62,   61,   60,   59,   58,   58,   56,   51,   49,   48,
-       45,   44,   43,   42,   32,   32,   32,   34,   32,  102,
-        3,  102,  102,  102,  102,  102,  102,  102,  102,  102,
+       60,   60,   60,   60,   96,   95,   94,   60,   93,   60,
+       92,   91,   60,   90,   60,   89,   88,   87,   86,   85,
+       60,   60,   84,   83,   82,   60,   81,   80,   60,   60,
+       79,   78,   77,   76,   58,   75,   74,   71,   70,   67,
+       66,   65,   64,   63,   62,   61,   60,   59,   58,   58,
+       31,   56,   51,   49,   48,   45,   44,   43,   42,   32,
+       32,   32,   34,   32,   31,  102,    3,  102,  102,  102,
+      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
 
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102
+      102,  102,  102,  102,  102,  102,  102,  102
     } ;
 
-static const flex_int16_t yy_chk[213] =
+static const flex_int16_t yy_chk[209] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    5,    5,    6,    6,   13,   13,   13,   14,   14,
-       14,   14,   15,   15,   15,   15,   19,   19,   24,   27,
-       27,   29,   31,   31,   37,   37,   37,   29,   41,   41,
-       24,   51,  104,   29,   38,   38,   38,   29,   39,   39,
-       39,   39,   54,  101,   51,   27,   40,   40,   40,   40,
-       54,  103,  100,  103,  103,  105,  105,   99,  105,  106,
+        1,   13,   13,   13,   14,   14,   14,   14,   15,   15,
+       15,   15,   19,   19,   24,   27,   27,   29,   37,   37,
+       37,   41,   41,   29,  104,   51,   24,  101,  100,   29,
+       38,   38,   38,   29,   39,   39,   39,   39,   51,   54,
+       99,   27,   40,   40,   40,   40,   98,   54,  103,   97,
+      103,  103,  105,  105,   96,  105,  106,   95,   94,  106,
 
-       98,   97,  106,   96,   95,   94,   93,   92,   91,   90,
-       89,   88,   87,   86,   85,   84,   83,   82,   81,   80,
-       79,   78,   77,   76,   75,   74,   73,   72,   71,   70,
-       69,   68,   67,   66,   65,   64,   63,   62,   61,   59,
-       57,   56,   55,   53,   52,   50,   49,   48,   47,   46,
-       45,   44,   43,   42,   36,   34,   30,   28,   26,   25,
-       23,   22,   21,   20,   18,   17,   16,    8,    7,    3,
+       93,   92,   91,   90,   89,   88,   87,   86,   85,   84,
+       83,   82,   81,   80,   79,   78,   77,   76,   75,   74,
+       73,   72,   71,   70,   69,   68,   67,   66,   65,   64,
+       63,   62,   61,   59,   57,   56,   55,   53,   52,   50,
+       49,   48,   47,   46,   45,   44,   43,   42,   36,   34,
+       31,   30,   28,   26,   25,   23,   22,   21,   20,   18,
+       17,   16,    8,    7,    5,    3,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
 
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102
+      102,  102,  102,  102,  102,  102,  102,  102
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -531,12 +529,15 @@ char *yytext;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 /*  Estructura definida para los tokens pertenecientes a la tabla de tokens.
 */
 struct token{
     int class;
     char *value;
+    char *atomo;
+    int line;
     struct token *ptrNext;
 };
 
@@ -565,7 +566,7 @@ void functionRelat(void);
 void functionAssig(void);
 void printTables(void);
 void freeTables(void);
-void insertToken(struct token **headToken, int classInput, char *dataInput);
+void insertToken(struct token **headToken, int classInput, char *dataInput, char *atomInput);
 char *insertNode(struct node **headNode, char *dataInput);
 void printTable(struct node **node, char *nameTable);
 void printTokenTable(struct token **node);
@@ -574,6 +575,56 @@ void deleteTable(struct node **headNode);
 void deleteLastToken(struct token **headToken);
 void deleteTokenTable(struct token **headToken);
 char *searchNodeTable(struct node **headNode, char* dataInput);
+
+// Nuevas Funciones Analizador Sintactico
+void printStringAtoms(struct token **node);
+void nextAtom(struct token **node);
+void saveReference(struct token **headNode, struct token **node);
+void Program(struct token **node);
+void otraFunc(struct token **node);
+void Func(struct token **node);
+void Param(struct token **node);
+void otroParam(struct token **node);
+void Cuerpo(struct token **node);
+void Decl(struct token **node);
+void D(struct token **node);
+void Tipo(struct token **node);
+void K(struct token **node);
+void Q(struct token **node);
+void N(struct token **node);
+void C(struct token **node);
+void A(struct token **node);
+void AP(struct token **node);
+void E(struct token **node);
+void EP(struct token **node);
+void T(struct token **node);
+void TP(struct token **node);
+void F(struct token **node);
+void R(struct token **node);
+void RP(struct token **node);
+void V(struct token **node);
+void VP(struct token **node);
+void VPP(struct token **node);
+void VPPP(struct token **node);
+void P(struct token **node);
+void listaP(struct token **node);
+void W(struct token **node);
+void I(struct token **node);
+void IP(struct token **node);
+void J(struct token **node);
+void Y(struct token **node);
+void X(struct token **node);
+void Z(struct token **node);
+void H(struct token **node);
+void CP(struct token **node);
+void OP(struct token **node);
+void U(struct token **node);
+void Devuelve(struct token **node);
+void valor(struct token **node);
+void Llama(struct token **node);
+void otroArg(struct token **node);
+void arg(struct token **node);
+void rechaza(char *a, char *b,struct token **node);
 
 /*  Apuntadores de la tabla de tokens, tablas de literales y tabla de simbolos.
     Arreglos de los catalogos de palabras reservadas y operadores relacionales.
@@ -587,10 +638,18 @@ struct node *stringTable = NULL;
 char *catalogRelat[]={"<",">","<=",">=","==","!="};
 char *nameFile;
 
+// Nuevas Estructuras Analizador Sintactico
+char *atomsCatalogReser[]={"a","b","f","t","g","w","m","#","o","x","j","h","p","c","q","y","z"};
+char *atomsCatalogRelat[]={"<",">","l","u","e","d"};
+struct token *referenceTokenTable = NULL;
+int countAtom=1;
+int countNewLine=1;
+bool flagCorrectSintact=true;
+
 /* Expresiones Regulares de las 9 clases de componentes léxicos, junto con ER auxiliares en detectar errores
 */
-#line 593 "lex.yy.c"
-#line 594 "lex.yy.c"
+#line 652 "lex.yy.c"
+#line 653 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -807,9 +866,9 @@ YY_DECL
 		}
 
 	{
-#line 82 "analizadorLexicoSintactico.l"
+#line 144 "analizadorLexicoSintactico.l"
 
-#line 813 "lex.yy.c"
+#line 872 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -842,7 +901,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 171 );
+		while ( yy_base[yy_current_state] != 167 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -869,71 +928,76 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 83 "analizadorLexicoSintactico.l"
-
+#line 145 "analizadorLexicoSintactico.l"
+countNewLine=countNewLine+1;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 84 "analizadorLexicoSintactico.l"
-functionReser();
+#line 146 "analizadorLexicoSintactico.l"
+
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 85 "analizadorLexicoSintactico.l"
-functionIdent();
+#line 147 "analizadorLexicoSintactico.l"
+functionReser();
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 86 "analizadorLexicoSintactico.l"
-functionNumConstReal();
+#line 148 "analizadorLexicoSintactico.l"
+functionIdent();
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 87 "analizadorLexicoSintactico.l"
-functionNumConstInt();
+#line 149 "analizadorLexicoSintactico.l"
+functionNumConstReal();
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 88 "analizadorLexicoSintactico.l"
+#line 150 "analizadorLexicoSintactico.l"
 functionNumConstInt();
 	YY_BREAK
 case 7:
-/* rule 7 can match eol */
 YY_RULE_SETUP
-#line 89 "analizadorLexicoSintactico.l"
-functionStr();
+#line 151 "analizadorLexicoSintactico.l"
+functionNumConstInt();
 	YY_BREAK
 case 8:
+/* rule 8 can match eol */
 YY_RULE_SETUP
-#line 90 "analizadorLexicoSintactico.l"
-functionSpec();
+#line 152 "analizadorLexicoSintactico.l"
+functionStr();
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 91 "analizadorLexicoSintactico.l"
-functionArith();
+#line 153 "analizadorLexicoSintactico.l"
+functionSpec();
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 92 "analizadorLexicoSintactico.l"
-functionRelat();
+#line 154 "analizadorLexicoSintactico.l"
+functionArith();
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 93 "analizadorLexicoSintactico.l"
-functionAssig();
+#line 155 "analizadorLexicoSintactico.l"
+functionRelat();
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 94 "analizadorLexicoSintactico.l"
-printf("%s: error: %s :Formato Lexico No Valido\n\n",nameFile,yytext);
+#line 156 "analizadorLexicoSintactico.l"
+functionAssig();
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 95 "analizadorLexicoSintactico.l"
+#line 157 "analizadorLexicoSintactico.l"
+printf("%s:%d: error: %s :Formato Lexico No Valido\n\n",nameFile,countNewLine,yytext);
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 158 "analizadorLexicoSintactico.l"
 ECHO;
 	YY_BREAK
-#line 937 "lex.yy.c"
+#line 1001 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1938,7 +2002,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 95 "analizadorLexicoSintactico.l"
+#line 158 "analizadorLexicoSintactico.l"
 
 int yywrap(){}
 int main(int argc, char *argv[]){
@@ -1950,12 +2014,13 @@ int main(int argc, char *argv[]){
         return 0;
     }
     nameFile = srcPath;
-    yyin = fopen(srcPath,"r");
-    outputFile = fopen("outputFile.txt","w");
-    yylex();
-    //Program(); // Funcion por definir
+    yyin = fopen(srcPath,"r");                              //Se lee el programa fuente
+    outputFile = fopen("outputFile.txt","w");               //Se abre el archivo de salida
+    yylex();                                                //Analisis Lexico
+    saveReference(&referenceTokenTable,&tokenTable);        //Guardar la referencia del primer nodo de tokenTable
     printTables();                                          //Se imprimen las tablas en el archivo de salida
     fclose(outputFile);                                     //Se cierra el archivo de salida
+    Program(&tokenTable);                                   //Analisis Sintactico
     freeTables();                                           //Se libera la memoria reservada de las tablas
     return 0;
 }
@@ -1975,7 +2040,7 @@ void functionReser(void){
     }
     position = (char*) malloc(sizeof(positionSearch));
     sprintf(position, "%d", positionSearch);
-    insertToken(&tokenTable,0,position);
+    insertToken(&tokenTable,0,position,atomsCatalogReser[positionSearch]);
 }
 
 /*  Funcion ER de Identificadores. Busca en la tabla de simbolos la ER encontrada pasando
@@ -1991,9 +2056,9 @@ void functionIdent(void){
     char *positionSearch = searchNodeTable(&symbolTable,yytext);
     if (strcmp(positionSearch,"-1") == 0){
         char *position = insertNode(&symbolTable,yytext);
-        insertToken(&tokenTable,1,position);
+        insertToken(&tokenTable,1,position,"i");
     } else {
-        insertToken(&tokenTable,1,positionSearch);
+        insertToken(&tokenTable,1,positionSearch,"i");
     }
 }
 
@@ -2001,7 +2066,7 @@ void functionIdent(void){
     la tabla de tokens, la clase 2 y la ER encontrada.
 */
 void functionNumConstInt(void){
-    insertToken(&tokenTable,2,yytext);
+    insertToken(&tokenTable,2,yytext,"n");
 }
 
 /*  Funcion ER de Constantes Numéricas Reales. Se inserta la ER encontrada en la tabla 
@@ -2011,7 +2076,7 @@ void functionNumConstInt(void){
 */
 void functionNumConstReal(void){
     char *position = insertNode(&realNumConstTable,yytext);
-    insertToken(&tokenTable,3,position);
+    insertToken(&tokenTable,3,position,"r");
 }
 
 /*  Funcion ER de Constantes Cadenas. Se inserta la ER encontrada en la tabla 
@@ -2021,21 +2086,21 @@ void functionNumConstReal(void){
 */
 void functionStr(void){
     char *position = insertNode(&stringTable,yytext);
-    insertToken(&tokenTable,4,position);
+    insertToken(&tokenTable,4,position,"s");
 }
 
 /*  Funcion ER de Simbolos Especiales. Se inserta el token pasando el apuntador de
     la tabla de tokens, la clase 5 y la ER encontrada.
 */
 void functionSpec(void){
-    insertToken(&tokenTable,5,yytext);
+    insertToken(&tokenTable,5,yytext,yytext);
 }
 
 /*  Funcion ER de Operadores Aritmeticos. Se inserta el token pasando el apuntador de
     la tabla de tokens, la clase 6 y la ER encontrada.
 */
 void functionArith(void){
-    insertToken(&tokenTable,6,yytext);
+    insertToken(&tokenTable,6,yytext,yytext);
 }
 
 /*  Funcion ER de Operadores Relacionales. Busca en el catalogo de operadores 
@@ -2053,24 +2118,25 @@ void functionRelat(void){
     }
     position = (char*) malloc(sizeof(positionSearch));
     sprintf(position, "%d", positionSearch);
-    insertToken(&tokenTable,7,position);
+    insertToken(&tokenTable,7,position,atomsCatalogRelat[positionSearch]);
 }
 
 /*  Funcion ER de Operador de Asignacion. Se inserta el token pasando el apuntador de
     la tabla de tokens, la clase 8 y la ER encontrada.
 */
 void functionAssig(void){
-    insertToken(&tokenTable,8,yytext);
+    insertToken(&tokenTable,8,yytext,yytext);
 }
 
 /*  Funcion Imprimir Tablas. Impresion de la tabla de tokens, tabla de simbolos y 
     tablas de literales en el archivo de salida.
 */
 void printTables(void){
-    printTokenTable(&tokenTable);
     printTable(&symbolTable, "Symbols");
     printTable(&realNumConstTable, "Real Numeric Constants");
     printTable(&stringTable, "String Constants");
+    printTokenTable(&tokenTable);
+    printStringAtoms(&tokenTable);
 }
 
 /*  Funcion Liberar Memoria. Se libera la memoria reservada por la tabla de tokens, 
@@ -2087,7 +2153,7 @@ void freeTables(void){
     Recibe como parametro la referencia de la tabla de tokens, la clase, y el indice de la
     tabla de simbolos o tabla de literales correspondiente o el valor directo de la ER.
 */
-void insertToken(struct token **headToken, int classInput, char *dataInput){
+void insertToken(struct token **headToken, int classInput, char *dataInput, char *atomInput){
     
     struct token *currentToken;
     struct token *previousToken;
@@ -2096,8 +2162,12 @@ void insertToken(struct token **headToken, int classInput, char *dataInput){
     if (newToken != NULL){
         
         int size = strlen(dataInput);
+        int sizeAtom = strlen(atomInput);
         newToken->value = (char*) malloc(size*sizeof(char));
+        newToken->atomo = (char*) malloc(sizeAtom*sizeof(char));
+        newToken->line = countNewLine;
         strcpy(newToken->value, dataInput);
+        strcpy(newToken->atomo, atomInput);
 
         newToken->class = classInput;
         previousToken = NULL;
@@ -2172,6 +2242,7 @@ char *insertNode(struct node **headNode, char *dataInput){
     Si la tabla esta vacia imprime el mensaje.
 */
 void printTable(struct node **node, char *nameTable){
+    struct node *headNode = *node;
     if (*node == NULL){
         fprintf(outputFile,"\n>> Empty %s Table.\n",nameTable);
     } else {
@@ -2181,6 +2252,26 @@ void printTable(struct node **node, char *nameTable){
             *node = (*node)->ptrNext;
         }
     }
+    *node=headNode;
+}
+
+/*  Funcion Imprimir Cadena de Atomos. Impresion de la cadena de atomos en el archivo de salida.
+    Recibe como parametro solo la referencia de la tabla de tokens.
+    Si la tabla esta vacia imprime el mensaje.
+*/
+void printStringAtoms(struct token **node){
+    struct token *headToken = *node;
+    if (*node == NULL) {
+        fprintf(outputFile,"\n>> Empty String of atoms.\n");
+    } else {
+        fprintf(outputFile,"\n>> String of atoms:\n");
+        while (*node != NULL){
+            fprintf(outputFile,"%s",(*node)->atomo);
+            *node = (*node)->ptrNext;
+        }
+    }
+    fprintf(outputFile,"\n");
+    *node=headToken;
 }
 
 /*  Funcion Imprimir Tabla de Tokens. Impresion de la tabla de tokens en el archivo de salida.
@@ -2188,6 +2279,7 @@ void printTable(struct node **node, char *nameTable){
     Si la tabla esta vacia imprime el mensaje.
 */
 void printTokenTable(struct token **node){
+    struct token *headToken = *node;
     if (*node == NULL) {
         fprintf(outputFile,"\n>> Empty Tokens Table.\n");
     } else {
@@ -2197,6 +2289,7 @@ void printTokenTable(struct token **node){
             *node = (*node)->ptrNext;
         }
     }
+    *node=headToken;
 }
 
 /*  Funcion Eliminar Ultimo Nodo de Tabla. Elimina el ultimo nodo de la tabla de simbolos o tablas 
@@ -2306,3 +2399,979 @@ char *searchNodeTable(struct node **headNode, char* dataInput){
   return positionString;
 }
 
+/* Funciones del Analizador Sintáctico Descendente Recursivo <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+*/
+
+/*  Funcion para guardar referencia del primer token de la tabla de Tokens.
+*/
+void saveReference(struct token **headNode, struct token **node){
+    *headNode=*node;
+}
+
+/*  Funcion para pasar al siguiente atomo de la cadena de atomos.
+*/
+void nextAtom(struct token **node){
+    *node = (*node)->ptrNext;
+    countAtom++;
+}
+
+//Produccion 1:
+void Program(struct token **node){
+    if (*node == NULL){
+        rechaza("b|g|#|y|x","EOF",node);
+    }else if(strcmp((*node)->atomo,"b") == 0
+        ||strcmp((*node)->atomo,"g") == 0
+        ||strcmp((*node)->atomo,"#") == 0
+        ||strcmp((*node)->atomo,"y") == 0
+        ||strcmp((*node)->atomo,"x") == 0){
+        Func(node);
+        otraFunc(node);
+    }else{
+        rechaza("b|g|#|y|x",(*node)->atomo,node);
+    }
+
+    outputFile = fopen("outputFile.txt","a+");              //Se abre el archivo de salida
+    if ((*node == NULL) && (flagCorrectSintact)){
+        *node = referenceTokenTable;
+        fprintf(outputFile,"\n%s: message: \"Programa fuente sintácticamente CORRECTO\"\n\n",nameFile);
+    }else{
+        *node = referenceTokenTable;
+        fprintf(outputFile,"\n%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
+    }
+    fclose(outputFile);                                     //Se cierra el archivo de salida
+}
+
+//Produccion 2,3:
+void otraFunc(struct token **node){
+    if (*node == NULL){
+        //No se hace nada pues es una transición epsilon
+    }else if(strcmp((*node)->atomo,"b") == 0
+        ||strcmp((*node)->atomo,"g") == 0
+        ||strcmp((*node)->atomo,"#") == 0
+        ||strcmp((*node)->atomo,"y") == 0
+        ||strcmp((*node)->atomo,"x") == 0){
+        Func(node);
+        otraFunc(node);
+    }else{
+        rechaza("b|g|#|y|x|EOF",(*node)->atomo,node);
+    }
+}
+
+//Produccion 4:
+void Func(struct token **node){
+    if (*node == NULL){
+        rechaza("b|g|#|y|x","EOF",node);
+    }else if(strcmp((*node)->atomo,"b") == 0
+        ||strcmp((*node)->atomo,"g") == 0
+        ||strcmp((*node)->atomo,"#") == 0
+        ||strcmp((*node)->atomo,"y") == 0
+        ||strcmp((*node)->atomo,"x") == 0){
+        Tipo(node);
+        if (strcmp((*node)->atomo,"i") == 0){
+            nextAtom(node);
+            if(strcmp((*node)->atomo,"(") == 0){
+                nextAtom(node);
+                Param(node);
+                if(strcmp((*node)->atomo,")") == 0){
+                    nextAtom(node);
+                    if(strcmp((*node)->atomo,"{") == 0){
+                        nextAtom(node);
+                        Cuerpo(node);
+                        if(strcmp((*node)->atomo,"}") == 0){
+                            nextAtom(node);
+                        }else{
+                            rechaza("}",(*node)->atomo,node);
+                        }
+                    }else{
+                        rechaza("{",(*node)->atomo,node);
+                    }
+                }else{
+                    rechaza(")",(*node)->atomo,node);
+                }
+            }else{
+                rechaza("(",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("i",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("b|g|#|y|x",(*node)->atomo,node);
+    }
+}
+
+
+//Produccion 5,6:
+void Param(struct token **node){
+    if (*node == NULL){
+        rechaza("b|g|#|y|x|)","EOF",node);
+    }else if( (strcmp((*node)->atomo,"b") == 0)
+         ||(strcmp((*node)->atomo,"g") == 0)
+         ||(strcmp((*node)->atomo,"#") == 0)
+         ||(strcmp((*node)->atomo,"y") == 0)
+         ||(strcmp((*node)->atomo,"x") == 0) ){
+        Tipo(node);
+        if(strcmp((*node)->atomo,"i")==0){
+            nextAtom(node);
+            otroParam(node);
+        }else{
+            rechaza("i",(*node)->atomo,node);
+        }
+    } else if (strcmp((*node)->atomo,")") == 0) {
+        //No se hace nada pues es una transición epsilon
+    }
+    else{
+        rechaza("b|g|#|y|x|)",(*node)->atomo,node);
+    }
+}
+
+//Produccion 7,8:
+void otroParam(struct token **node){
+    if (*node == NULL){
+        rechaza(",|)","EOF",node);
+    }else if(strcmp((*node)->atomo,",") == 0){
+        nextAtom(node);
+        Tipo(node);
+        if (strcmp((*node)->atomo,"i") == 0){
+            nextAtom(node);
+        }else{
+            rechaza("i",(*node)->atomo,node);
+        }
+        otroParam(node);
+    } else if (strcmp((*node)->atomo,")") == 0){
+        //No se hace nada pues es una transición epsilon
+    }else{
+        rechaza(",|)",(*node)->atomo,node);
+    }
+}
+
+//Produccion 9:
+void Cuerpo(struct token **node){
+    if (*node == NULL){
+        rechaza("b|g|#|y|x|i|f|h|w|j|[|z|c|}","EOF",node);
+    }else if(strcmp((*node)->atomo,"b")==0
+        ||strcmp((*node)->atomo,"g")==0
+        ||strcmp((*node)->atomo,"#")==0
+        ||strcmp((*node)->atomo,"y")==0
+        ||strcmp((*node)->atomo,"x")==0
+        ||strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"f")==0
+        ||strcmp((*node)->atomo,"h")==0
+        ||strcmp((*node)->atomo,"w")==0
+        ||strcmp((*node)->atomo,"j")==0
+        ||strcmp((*node)->atomo,"[")==0
+        ||strcmp((*node)->atomo,"z")==0
+        ||strcmp((*node)->atomo,"c")==0
+        ||strcmp((*node)->atomo,"}")==0){
+        Decl(node);
+        listaP(node);
+    }else{
+        rechaza("b|g|#|y|x|i|f|h|w|j|[|z|c|}",(*node)->atomo,node);
+    }
+}
+
+//Produccion 10,11:
+void Decl(struct token **node){
+    if (*node == NULL){
+        rechaza("i|f|h|w|j|[|z|c|}|b|g|#|y|x","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"f")==0
+        ||strcmp((*node)->atomo,"h")==0
+        ||strcmp((*node)->atomo,"w")==0
+        ||strcmp((*node)->atomo,"j")==0
+        ||strcmp((*node)->atomo,"[")==0
+        ||strcmp((*node)->atomo,"z")==0
+        ||strcmp((*node)->atomo,"c")==0
+        ||strcmp((*node)->atomo,"}")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else if(strcmp((*node)->atomo,"b")==0
+        ||strcmp((*node)->atomo,"g")==0
+        ||strcmp((*node)->atomo,"#")==0
+        ||strcmp((*node)->atomo,"y")==0
+        ||strcmp((*node)->atomo,"x")==0){
+        D(node);
+        Decl(node);
+    } else {
+        rechaza("i|f|h|w|j|[|z|c|}|b|g|#|y|x",(*node)->atomo,node);
+    }
+}
+
+//Produccion 12:
+void D(struct token **node){
+    if (*node == NULL){
+        rechaza("b|g|#|y|x","EOF",node);
+    }else if(strcmp((*node)->atomo,"b")==0
+        ||strcmp((*node)->atomo,"g")==0
+        ||strcmp((*node)->atomo,"#")==0
+        ||strcmp((*node)->atomo,"y")==0
+        ||strcmp((*node)->atomo,"x")==0){
+        Tipo(node);
+        K(node);
+        if(strcmp((*node)->atomo,";")==0){
+            nextAtom(node);
+        }else{
+            rechaza(";",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("b|g|#|y|x",(*node)->atomo,node);
+    }
+}
+
+//Produccion 13,14,15,16,17:
+void Tipo(struct token **node){
+    if (*node == NULL){
+        rechaza("b|g|#|y|x","EOF",node);
+    }else if(strcmp((*node)->atomo,"b")==0
+        ||strcmp((*node)->atomo,"g")==0
+        ||strcmp((*node)->atomo,"#")==0
+        ||strcmp((*node)->atomo,"y")==0
+        ||strcmp((*node)->atomo,"x")==0){
+        nextAtom(node);
+    }else{
+        rechaza("b|g|#|y|x",(*node)->atomo,node);
+    }
+}
+
+//Produccion 18:
+void K(struct token **node){
+    if (*node == NULL){
+        rechaza("i","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+        Q(node);
+    }else{
+        rechaza("i",(*node)->atomo,node);
+    }
+}
+
+//Produccion 19,20,21:
+void Q(struct token **node){
+    if (*node == NULL){
+        rechaza(";|=|,","EOF",node);
+    }else if(strcmp((*node)->atomo,";")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else if(strcmp((*node)->atomo,"=")==0){
+        nextAtom(node);
+        N(node);
+        C(node);
+    }else if(strcmp((*node)->atomo,",")==0){
+        nextAtom(node);
+        K(node);
+    }else{
+        rechaza(";|=|,",(*node)->atomo,node);
+    }
+}
+
+//Produccion 22,23,24:
+void N(struct token **node){
+    if (*node == NULL){
+        rechaza("n|r|s","EOF",node);
+    }else if(strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"s")==0){ //sintetizamos las tres producciones de N como una
+        nextAtom(node);
+    }else{
+        rechaza("n|r|s",(*node)->atomo,node);
+    }
+}
+
+//Produccion 25,26:
+void C(struct token **node){
+    if (*node == NULL){
+        rechaza(";|,","EOF",node);
+    }else if(strcmp((*node)->atomo,";")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else if(strcmp((*node)->atomo,",")==0){
+        nextAtom(node);
+        K(node);
+    } else {
+        rechaza(";|,",(*node)->atomo,node);
+    }
+}
+
+//Produccion 27:
+void A(struct token **node){
+    if (*node == NULL){
+        rechaza("s|(|i|n|r|[","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+        if(strcmp((*node)->atomo,"=")==0){
+            nextAtom(node);
+            AP(node);
+            if(strcmp((*node)->atomo,";")==0){
+                nextAtom(node);
+            }else{
+                rechaza(";",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("=",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("i",(*node)->atomo,node);
+    }
+}
+
+//Produccion 28,29:
+void AP(struct token **node){
+    if (*node == NULL){
+        rechaza("s|(|i|n|r|[","EOF",node);
+    }else if(strcmp((*node)->atomo,"s")==0){
+        nextAtom(node);
+    }else if(strcmp((*node)->atomo,"(")==0||strcmp((*node)->atomo,"i")==0||strcmp((*node)->atomo,"n")==0||strcmp((*node)->atomo,"r")==0||strcmp((*node)->atomo,"[")==0){
+        E(node);
+    }else{
+        rechaza("s|(|i|n|r|[",(*node)->atomo,node); //POSIBLE ERROR----------------
+    }
+}
+
+//Produccion 30:
+void E(struct token **node){
+    if (*node == NULL){
+        rechaza("(|i|n|r|[","EOF",node);
+    }else if(strcmp((*node)->atomo,"(")==0
+        ||strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"[")==0){
+        T(node);
+        EP(node);
+    }else{
+        rechaza("(|i|n|r|[",(*node)->atomo,node);
+    }
+}
+
+//Produccion 31,32,33:
+void EP(struct token **node){
+    if (*node == NULL){
+        rechaza("+|-|)|;","EOF",node);
+    }else if(strcmp((*node)->atomo,"+")==0){
+        nextAtom(node);
+        T(node);
+        EP(node);
+    }else if(strcmp((*node)->atomo,"-")==0){
+        nextAtom(node);
+        T(node);
+        EP(node);
+    }else if(strcmp((*node)->atomo,";")==0||strcmp((*node)->atomo,")")==0){
+        //Transicion epsilon, no se realiza alguna acción
+    }else{
+        rechaza("+|-|)|;",(*node)->atomo,node);
+    }
+}
+
+//Produccion 34:
+void T(struct token **node){
+    if (*node == NULL){
+        rechaza("(|i|n|r|[","EOF",node);
+    }else if(strcmp((*node)->atomo,"(")==0
+        ||strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"[")==0){
+        F(node);
+        TP(node);
+    }else{
+        rechaza("(|i|n|r|[",(*node)->atomo,node);
+    }
+}
+
+//Produccion 35,36,37,38,38,40:
+void TP(struct token **node){
+    if (*node == NULL){
+        rechaza("*|/|\\|%|^|)|;","EOF",node);
+    }else if(strcmp((*node)->atomo,"*")==0){
+        nextAtom(node);
+        F(node);
+        TP(node);
+    }else if(strcmp((*node)->atomo,"/")==0){
+        nextAtom(node);
+        F(node);
+        TP(node);
+    }else if(strcmp((*node)->atomo,"\\")==0){
+        nextAtom(node);
+        F(node);
+        TP(node);
+    }else if(strcmp((*node)->atomo,"%")==0){
+        nextAtom(node);
+        F(node);
+        TP(node);
+    }else if(strcmp((*node)->atomo,"^")==0){
+        nextAtom(node);
+        F(node);
+        TP(node);
+    }else if(strcmp((*node)->atomo,")")==0||strcmp((*node)->atomo,";")==0||strcmp((*node)->atomo,"+")==0||strcmp((*node)->atomo,"-")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else{
+        rechaza("*|/|\\|%|^|)|;",(*node)->atomo,node);
+    }
+}
+
+//Produccion 41,42,43,44,45:
+void F(struct token **node){
+    if (*node == NULL){
+        rechaza("(|i|n|r|[","EOF",node);
+    }else if(strcmp((*node)->atomo,"(")==0){
+        nextAtom(node);
+        E(node);
+        if(strcmp((*node)->atomo,")")==0){
+            nextAtom(node);
+        }else{
+            rechaza(")",(*node)->atomo,node);
+        }
+    }else if(strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0){
+        nextAtom(node);
+    }else if(strcmp((*node)->atomo,"[")==0){
+        Llama(node);
+    }else{
+        rechaza("(|i|n|r|[",(*node)->atomo,node);
+    }
+}
+
+//Produccion 46,47,48,49:
+void R(struct token **node){
+    if (*node == NULL){
+        rechaza("i|n|r|s","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+        RP(node);
+        V(node);
+    }else if(strcmp((*node)->atomo,"n")==0){
+        nextAtom(node);
+        RP(node);
+        VP(node);
+    }else if(strcmp((*node)->atomo,"r")==0){
+        nextAtom(node);
+        RP(node);
+        VPP(node);
+    }else if(strcmp((*node)->atomo,"s")==0){
+        nextAtom(node);
+        RP(node);
+        VPPP(node);
+    }else{
+        rechaza("i|n|r|s",(*node)->atomo,node);
+    }
+}
+
+//Produccion 50,51,52,53,54,55:
+void RP(struct token **node){
+    if (*node == NULL){
+        rechaza(">|<|l|e|d|u","EOF",node);
+    }else if(strcmp((*node)->atomo,">")==0
+        ||strcmp((*node)->atomo,"<")==0
+        ||strcmp((*node)->atomo,"l")==0
+        ||strcmp((*node)->atomo,"e")==0
+        ||strcmp((*node)->atomo,"d")==0
+        ||strcmp((*node)->atomo,"u")==0){
+        nextAtom(node);
+    }else{
+        rechaza(">|<|l|e|d|u",(*node)->atomo,node);
+    }
+}
+
+//Produccion 56,57,58,59:
+void V(struct token **node){
+    if (*node == NULL){
+        rechaza("i|n|r|s","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"s")==0){
+        nextAtom(node);
+    }else{
+        rechaza("i|n|r|s",(*node)->atomo,node);
+    }
+}
+
+//Produccion 60,61:
+void VP(struct token **node){
+    if (*node == NULL){
+        rechaza("n|i","EOF",node);
+    }else if(strcmp((*node)->atomo,"n")==0||strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+    }else{
+        rechaza("n|i",(*node)->atomo,node);
+    }
+}
+
+//Produccion 62,63:
+void VPP(struct token **node){
+    if (*node == NULL){
+        rechaza("r|i","EOF",node);
+    }else if(strcmp((*node)->atomo,"r")==0||strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+    }else{
+        rechaza("r|i",(*node)->atomo,node);
+    }
+}
+
+//Produccion 64,65:
+void VPPP(struct token **node){
+    if (*node == NULL){
+        rechaza("s|i","EOF",node);
+    }else if(strcmp((*node)->atomo,"s")==0||strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+    }else{
+        rechaza("s|i",(*node)->atomo,node);
+    }
+}
+
+//Produccion 66,67,68,69,70,71,72,73:
+void P(struct token **node){
+    if (*node == NULL){
+        rechaza("i|f|h|w|j|[|z|c","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0){
+        A(node);
+    }else if(strcmp((*node)->atomo,"f")==0){
+        I(node);
+    }else if(strcmp((*node)->atomo,"h")==0){
+        H(node);
+    }else if(strcmp((*node)->atomo,"w")==0){
+        W(node);
+    }else if(strcmp((*node)->atomo,"j")==0){
+        J(node);
+    }else if(strcmp((*node)->atomo,"[")==0){
+        Llama(node);
+    }else if(strcmp((*node)->atomo,"z")==0){
+        Devuelve(node);
+    }else if(strcmp((*node)->atomo,"c")==0){
+        nextAtom(node);
+        if(strcmp((*node)->atomo,";")==0){
+            nextAtom(node); 
+        }else{
+            rechaza(";",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("i|f|h|w|j|[|z|c",(*node)->atomo,node);
+    }
+}
+
+//Produccion 74,75:
+void listaP(struct token **node){
+    if (*node == NULL){
+        rechaza("}|:|q|a|t|o|i|f|h|w|j|[|z|c","EOF",node);
+    }else if(strcmp((*node)->atomo,"}")==0
+        ||strcmp((*node)->atomo,":")==0
+        ||strcmp((*node)->atomo,"q")==0
+        ||strcmp((*node)->atomo,"a")==0
+        ||strcmp((*node)->atomo,"t")==0
+        ||strcmp((*node)->atomo,"o")==0){
+        //al ser epsilon no avanza en la cadena
+    }else if(strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"f")==0
+        ||strcmp((*node)->atomo,"h")==0
+        ||strcmp((*node)->atomo,"w")==0
+        ||strcmp((*node)->atomo,"j")==0
+        ||strcmp((*node)->atomo,"[")==0
+        ||strcmp((*node)->atomo,"z")==0
+        ||strcmp((*node)->atomo,"c")==0){
+        P(node);
+        listaP(node);
+    }else{
+        rechaza("}|:|q|a|t|o|i|f|h|w|j|[|z|c",(*node)->atomo,node);
+    }
+}
+
+//Produccion 76:
+void W(struct token **node){
+    if (*node == NULL){
+        rechaza("w","EOF",node);
+    }else if(strcmp((*node)->atomo,"w")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"(")==0){
+            nextAtom(node);
+            R(node);
+            if (strcmp((*node)->atomo,")")==0){
+                nextAtom(node);
+                if (strcmp((*node)->atomo,"m")==0){
+                    nextAtom(node);
+                    if (strcmp((*node)->atomo,"{")==0){
+                        nextAtom(node);
+                        listaP(node);
+                        if (strcmp((*node)->atomo,"}")==0){
+                            nextAtom(node);
+                        }else{
+                            rechaza("}",(*node)->atomo,node);
+                        }
+                    }else{
+                        rechaza("{",(*node)->atomo,node);
+                    }
+                }else{
+                    rechaza("m",(*node)->atomo,node);
+                }
+            }else{
+                rechaza(")",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("(",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("w",(*node)->atomo,node);
+    }
+}
+
+//Produccion 77:
+void I(struct token **node){
+    if (*node == NULL){
+        rechaza("f","EOF",node);
+    }else if(strcmp((*node)->atomo,"f")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"(")==0){
+            nextAtom(node);
+            R(node);
+            if (strcmp((*node)->atomo,")")==0){
+                nextAtom(node);
+                listaP(node);
+                IP(node);
+                if (strcmp((*node)->atomo,":")==0){
+                    nextAtom(node);
+                }else{
+                    rechaza(":",(*node)->atomo,node);
+                }
+            }else{
+                rechaza(")",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("(",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("f",(*node)->atomo,node);
+    }
+}
+
+//Produccion 78,79:
+void IP(struct token **node){
+    if (*node == NULL){
+        rechaza("t|:","EOF",node);
+    }else if(strcmp((*node)->atomo,"t")==0){
+        nextAtom(node);
+        listaP(node);
+    }else if(strcmp((*node)->atomo,":")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else{
+        rechaza("t|:",(*node)->atomo,node);
+    }
+}
+
+//Produccion 80:
+void J(struct token **node){
+    if (*node == NULL){
+        rechaza("j","EOF",node);
+    }else if(strcmp((*node)->atomo,"j")==0){
+        nextAtom(node);
+         if (strcmp((*node)->atomo,"(")==0){
+            nextAtom(node);
+            Y(node);
+            X(node);
+            Z(node);
+            if (strcmp((*node)->atomo,"{")==0){
+                nextAtom(node);
+                listaP(node);
+                if (strcmp((*node)->atomo,"}")==0){
+                    nextAtom(node);
+                }else{
+                    rechaza("}",(*node)->atomo,node);
+                }
+            }else{
+                rechaza("{",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("(",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("j",(*node)->atomo,node);
+    }
+}
+
+//Produccion 81,82:
+void Y(struct token **node){
+    if (*node == NULL){
+        rechaza("i|;","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"=")==0){
+            nextAtom(node);
+            E(node);
+            if (strcmp((*node)->atomo,";")==0){
+                nextAtom(node);
+            }else{
+                rechaza(";",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("=",(*node)->atomo,node);
+        }
+    }else if(strcmp((*node)->atomo,";")==0){
+        nextAtom(node);
+    }else{
+        rechaza("i|;",(*node)->atomo,node);
+    }
+}
+
+//Produccion 83,84:
+void X(struct token **node){
+    if (*node == NULL){
+        rechaza("i|n|r|s|;","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"s")==0){
+        R(node);
+        if (strcmp((*node)->atomo,";")==0){
+            nextAtom(node);
+        }else{
+            rechaza(";",(*node)->atomo,node);
+        }
+    }else if(strcmp((*node)->atomo,";")==0){
+        nextAtom(node);
+    }else{
+        rechaza("i|n|r|s|;",(*node)->atomo,node);
+    }
+}
+
+//Produccion 85,86:
+void Z(struct token **node){
+    if (*node == NULL){
+        rechaza("i|)","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"=")==0){
+            nextAtom(node);
+            E(node);
+            if (strcmp((*node)->atomo,")")==0){
+                nextAtom(node);
+            }else{
+                rechaza(")",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("=",(*node)->atomo,node);
+        }
+    }else if(strcmp((*node)->atomo,")")==0){
+        nextAtom(node);
+    }else{
+        rechaza("i|)",(*node)->atomo,node);
+    }
+}
+
+//Produccion 87:
+void H(struct token **node){
+    if (*node == NULL){
+        rechaza("h","EOF",node);
+    }else if(strcmp((*node)->atomo,"h")==0){
+        nextAtom(node);
+         if (strcmp((*node)->atomo,"(")==0){
+            nextAtom(node);
+            if (strcmp((*node)->atomo,"i")==0){
+                nextAtom(node);
+                if (strcmp((*node)->atomo,")")==0){
+                    nextAtom(node);
+                    if (strcmp((*node)->atomo,"{")==0){
+                        nextAtom(node);
+                        CP(node);
+                        OP(node);
+                        if (strcmp((*node)->atomo,"}")==0){
+                            nextAtom(node);
+                        }else{
+                            rechaza("}",(*node)->atomo,node);
+                        }
+                    }else{
+                        rechaza("{",(*node)->atomo,node);
+                    }
+                }else{
+                    rechaza(")",(*node)->atomo,node);
+                }
+            }else{
+                rechaza("i",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("(",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("h",(*node)->atomo,node);
+    }
+}
+
+//Produccion 88,89:
+void CP(struct token **node){
+    if (*node == NULL){
+        rechaza("a|}|o","EOF",node);
+    }else if(strcmp((*node)->atomo,"a")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"n")==0){
+            nextAtom(node);
+            if (strcmp((*node)->atomo,":")==0){
+                nextAtom(node);
+                listaP(node);
+                U(node);
+                CP(node);      
+            }else{
+                rechaza(":",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("n",(*node)->atomo,node);
+        }
+    }else if(strcmp((*node)->atomo,"}")==0
+        ||strcmp((*node)->atomo,"o")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else{
+        rechaza("a|}|o",(*node)->atomo,node);
+    }
+}
+
+//Produccion 90,91:
+void OP(struct token **node){
+    if (*node == NULL){
+        rechaza("o|}","EOF",node);
+    }else if(strcmp((*node)->atomo,"o")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,":")==0){
+            nextAtom(node);
+            listaP(node);
+        }else{
+            rechaza(":",(*node)->atomo,node);
+        }
+    }else if(strcmp((*node)->atomo,"}")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else{
+        rechaza("o|}",(*node)->atomo,node);
+    }
+}
+
+//Produccion 92,93:
+void U(struct token **node){
+    if (*node == NULL){
+        rechaza("q|a|}|o","EOF",node);
+    }else if(strcmp((*node)->atomo,"q")==0){
+        nextAtom(node);
+    }else if(strcmp((*node)->atomo,"a")==0
+        ||strcmp((*node)->atomo,"}")==0
+        ||strcmp((*node)->atomo,"o")==0){
+        //Produccion epsilon, no se hace alguna accion
+    }else{
+        rechaza("q|a|}|o",(*node)->atomo,node);
+    }
+}
+
+//Produccion 94:
+void Devuelve(struct token **node){
+    if (*node == NULL){
+        rechaza("z","EOF",node);
+    }else if(strcmp((*node)->atomo,"z")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"(")==0){
+            nextAtom(node);
+            valor(node);
+            if (strcmp((*node)->atomo,")")==0){
+                nextAtom(node);
+                if (strcmp((*node)->atomo,";")==0){
+                    nextAtom(node);
+                }else{
+                    rechaza(";",(*node)->atomo,node);
+                }
+            }else{
+                rechaza(")",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("(",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("z",(*node)->atomo,node);
+    }
+}
+
+//Produccion 95,96:
+void valor(struct token **node){
+    if (*node == NULL){
+        rechaza("i|n|r|s|)","EOF",node);
+    }else if(strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"s")==0){
+        V(node);
+    }else if(strcmp((*node)->atomo,")")==0){
+        //produccion epsilon, no tiene instrucciones.
+    }else{
+        rechaza("i|n|r|s|)",(*node)->atomo,node);
+    }
+}
+
+//Produccion 97:
+void Llama(struct token **node){
+    if (*node == NULL){
+        rechaza("[","EOF",node);
+    }else if(strcmp((*node)->atomo,"[")==0){
+        nextAtom(node);
+        if (strcmp((*node)->atomo,"i")==0){
+            nextAtom(node);
+            if (strcmp((*node)->atomo,"(")==0){
+                nextAtom(node);
+                arg(node);
+                if (strcmp((*node)->atomo,")")==0){
+                    nextAtom(node);
+                    if (strcmp((*node)->atomo,"]")==0){
+                        nextAtom(node);
+                    }else{
+                        rechaza("]",(*node)->atomo,node);
+                    }
+                }else{
+                    rechaza(")",(*node)->atomo,node);
+                }
+            }else{
+                rechaza("(",(*node)->atomo,node);
+            }
+        }else{
+            rechaza("i",(*node)->atomo,node);
+        }
+    }else{
+        rechaza("[",(*node)->atomo,node);
+    }
+}
+
+//Produccion 98,99:
+void arg(struct token **node){
+    if (*node == NULL){
+        rechaza(")|i|n|r|s","EOF",node);
+    }else if(strcmp((*node)->atomo,")")==0){
+        //produccion epsilon, no tiene instrucciones.
+    }else if (strcmp((*node)->atomo,"i")==0
+        ||strcmp((*node)->atomo,"n")==0
+        ||strcmp((*node)->atomo,"r")==0
+        ||strcmp((*node)->atomo,"s")==0){
+        V(node);
+        otroArg(node);
+    }else{
+        rechaza(")|i|n|r|s",(*node)->atomo,node);
+    }
+}
+
+//Produccion 100,101:
+void otroArg(struct token **node){
+    if (*node == NULL){
+        rechaza(",|)","EOF",node);
+    }else if(strcmp((*node)->atomo,",")==0){
+        nextAtom(node);
+        V(node);
+        otroArg(node);
+    }else if(strcmp((*node)->atomo,")")==0){
+        //produccion epsilon, no tiene instrucciones.
+    }else{
+        rechaza(",|)",(*node)->atomo,node);
+    }
+}
+
+/*  Funcion rechaza la cadena de atomos.
+*/
+void rechaza(char *a, char *b,struct token **node){
+    flagCorrectSintact=false;
+    if (*node == NULL){
+        *node = referenceTokenTable;
+        printf("%s:EOF: error (%d): Se esperaba \"%s\" en lugar de \"%s\" :Formato Sintactico No Valido\n\n",nameFile,countAtom,a,b);
+        outputFile = fopen("outputFile.txt","a+");              //Se abre el archivo de salida
+        fprintf(outputFile,"\n%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
+        fclose(outputFile);                                     //Se cierra el archivo de salida
+        freeTables();                                           //Se libera la memoria reservada de las tablas
+        exit(-1);
+    }else{
+        printf("%s:%d: error (%d): Se esperaba \"%s\" en lugar de \"%s\" :Formato Sintactico No Valido\n\n",nameFile,(*node)->line,countAtom,a,b);
+        nextAtom(node);
+    }
+}

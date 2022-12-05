@@ -50,3 +50,4 @@ number  $funDos(big $Num)
     $valor= $Num*7.5%9-$Num;
     throw($valor);
 }
+

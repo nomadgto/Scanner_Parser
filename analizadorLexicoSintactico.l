@@ -17,6 +17,7 @@ struct token{
     int class;
     char *value;
     char *atomo;
+    int line;
     struct token *ptrNext;
 };
 
@@ -116,18 +117,20 @@ struct node *realNumConstTable = NULL;
 struct node *stringTable = NULL;
 char *catalogRelat[]={"<",">","<=",">=","==","!="};
 char *nameFile;
-int conteoAtom=1;
 
 // Nuevas Estructuras Analizador Sintactico
 char *atomsCatalogReser[]={"a","b","f","t","g","w","m","#","o","x","j","h","p","c","q","y","z"};
 char *atomsCatalogRelat[]={"<",">","l","u","e","d"};
 struct token *referenceTokenTable = NULL;
+int countAtom=1;
+int countNewLine=1;
 bool flagCorrectSintact=true;
 
 /* Expresiones Regulares de las 9 clases de componentes léxicos, junto con ER auxiliares en detectar errores
 */
 %}
-delimit [ \a\b\f\n\r\t\v]+
+newLine \n
+delimit [ \a\b\f\r\t\v]+
 reser alternative|big|evaluate|instead|large|loop|make|number|other|real|repeat|select|small|step|stop|symbol|throw
 ident \$[a-zA-Z]+
 real [0-9]*\.[0-9]+
@@ -139,6 +142,7 @@ arith [+\-*/%\\^]
 relat <|>|<=|>=|==|!=
 assig =
 %%
+{newLine} countNewLine=countNewLine+1;
 {delimit}
 {reser} functionReser();
 {ident} functionIdent();
@@ -150,7 +154,7 @@ assig =
 {arith} functionArith();
 {relat} functionRelat();
 {assig} functionAssig();
-. printf("%s: error: %s :Formato Lexico No Valido\n\n",nameFile,yytext);
+. printf("%s:%d: error: %s :Formato Lexico No Valido\n\n",nameFile,countNewLine,yytext);
 %%
 int yywrap(){}
 int main(int argc, char *argv[]){
@@ -162,13 +166,13 @@ int main(int argc, char *argv[]){
         return 0;
     }
     nameFile = srcPath;
-    yyin = fopen(srcPath,"r");
-    outputFile = fopen("outputFile.txt","w");
-    yylex();
+    yyin = fopen(srcPath,"r");                              //Se lee el programa fuente
+    outputFile = fopen("outputFile.txt","w");               //Se abre el archivo de salida
+    yylex();                                                //Analisis Lexico
     saveReference(&referenceTokenTable,&tokenTable);        //Guardar la referencia del primer nodo de tokenTable
     printTables();                                          //Se imprimen las tablas en el archivo de salida
     fclose(outputFile);                                     //Se cierra el archivo de salida
-    Program(&tokenTable);                                   // Analisis Sintactico
+    Program(&tokenTable);                                   //Analisis Sintactico
     freeTables();                                           //Se libera la memoria reservada de las tablas
     return 0;
 }
@@ -313,6 +317,7 @@ void insertToken(struct token **headToken, int classInput, char *dataInput, char
         int sizeAtom = strlen(atomInput);
         newToken->value = (char*) malloc(size*sizeof(char));
         newToken->atomo = (char*) malloc(sizeAtom*sizeof(char));
+        newToken->line = countNewLine;
         strcpy(newToken->value, dataInput);
         strcpy(newToken->atomo, atomInput);
 
@@ -549,7 +554,7 @@ char *searchNodeTable(struct node **headNode, char* dataInput){
 /* Funciones del Analizador Sintáctico Descendente Recursivo <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 */
 
-/*  Funcion guardar referencia del primer token den la tabla de Tokens.
+/*  Funcion para guardar referencia del primer token de la tabla de Tokens.
 */
 void saveReference(struct token **headNode, struct token **node){
     *headNode=*node;
@@ -559,15 +564,13 @@ void saveReference(struct token **headNode, struct token **node){
 */
 void nextAtom(struct token **node){
     *node = (*node)->ptrNext;
-    conteoAtom++;
+    countAtom++;
 }
 
 //Produccion 1:
 void Program(struct token **node){
     if (*node == NULL){
         rechaza("b|g|#|y|x","EOF",node);
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"b") == 0
         ||strcmp((*node)->atomo,"g") == 0
         ||strcmp((*node)->atomo,"#") == 0
@@ -579,13 +582,15 @@ void Program(struct token **node){
         rechaza("b|g|#|y|x",(*node)->atomo,node);
     }
 
+    outputFile = fopen("outputFile.txt","a+");              //Se abre el archivo de salida
     if ((*node == NULL) && (flagCorrectSintact)){
         *node = referenceTokenTable;
-        printf("\n%s: message: \"Programa fuente sintácticamente CORRECTO\"\n\n",nameFile);
-    } else {
+        fprintf(outputFile,"\n%s: message: \"Programa fuente sintácticamente CORRECTO\"\n\n",nameFile);
+    }else{
         *node = referenceTokenTable;
-        printf("\n%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
+        fprintf(outputFile,"\n%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
     }
+    fclose(outputFile);                                     //Se cierra el archivo de salida
 }
 
 //Produccion 2,3:
@@ -608,9 +613,6 @@ void otraFunc(struct token **node){
 void Func(struct token **node){
     if (*node == NULL){
         rechaza("b|g|#|y|x","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"b") == 0
         ||strcmp((*node)->atomo,"g") == 0
         ||strcmp((*node)->atomo,"#") == 0
@@ -654,9 +656,6 @@ void Func(struct token **node){
 void Param(struct token **node){
     if (*node == NULL){
         rechaza("b|g|#|y|x|)","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if( (strcmp((*node)->atomo,"b") == 0)
          ||(strcmp((*node)->atomo,"g") == 0)
          ||(strcmp((*node)->atomo,"#") == 0)
@@ -681,9 +680,6 @@ void Param(struct token **node){
 void otroParam(struct token **node){
     if (*node == NULL){
         rechaza(",|)","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,",") == 0){
         nextAtom(node);
         Tipo(node);
@@ -704,9 +700,6 @@ void otroParam(struct token **node){
 void Cuerpo(struct token **node){
     if (*node == NULL){
         rechaza("b|g|#|y|x|i|f|h|w|j|[|z|c|}","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"b")==0
         ||strcmp((*node)->atomo,"g")==0
         ||strcmp((*node)->atomo,"#")==0
@@ -732,9 +725,6 @@ void Cuerpo(struct token **node){
 void Decl(struct token **node){
     if (*node == NULL){
         rechaza("i|f|h|w|j|[|z|c|}|b|g|#|y|x","EOF",node);
-        *node = referenceTokenTable;
-        printf("\n%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0
         ||strcmp((*node)->atomo,"f")==0
         ||strcmp((*node)->atomo,"h")==0
@@ -761,9 +751,6 @@ void Decl(struct token **node){
 void D(struct token **node){
     if (*node == NULL){
         rechaza("b|g|#|y|x","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"b")==0
         ||strcmp((*node)->atomo,"g")==0
         ||strcmp((*node)->atomo,"#")==0
@@ -785,9 +772,6 @@ void D(struct token **node){
 void Tipo(struct token **node){
     if (*node == NULL){
         rechaza("b|g|#|y|x","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"b")==0
         ||strcmp((*node)->atomo,"g")==0
         ||strcmp((*node)->atomo,"#")==0
@@ -803,9 +787,6 @@ void Tipo(struct token **node){
 void K(struct token **node){
     if (*node == NULL){
         rechaza("i","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
         Q(node);
@@ -818,9 +799,6 @@ void K(struct token **node){
 void Q(struct token **node){
     if (*node == NULL){
         rechaza(";|=|,","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,";")==0){
         //Produccion epsilon, no se hace alguna accion
     }else if(strcmp((*node)->atomo,"=")==0){
@@ -839,9 +817,6 @@ void Q(struct token **node){
 void N(struct token **node){
     if (*node == NULL){
         rechaza("n|r|s","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"n")==0
         ||strcmp((*node)->atomo,"r")==0
         ||strcmp((*node)->atomo,"s")==0){ //sintetizamos las tres producciones de N como una
@@ -855,9 +830,6 @@ void N(struct token **node){
 void C(struct token **node){
     if (*node == NULL){
         rechaza(";|,","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,";")==0){
         //Produccion epsilon, no se hace alguna accion
     }else if(strcmp((*node)->atomo,",")==0){
@@ -872,9 +844,6 @@ void C(struct token **node){
 void A(struct token **node){
     if (*node == NULL){
         rechaza("s|(|i|n|r|[","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
         if(strcmp((*node)->atomo,"=")==0){
@@ -897,9 +866,6 @@ void A(struct token **node){
 void AP(struct token **node){
     if (*node == NULL){
         rechaza("s|(|i|n|r|[","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"s")==0){
         nextAtom(node);
     }else if(strcmp((*node)->atomo,"(")==0||strcmp((*node)->atomo,"i")==0||strcmp((*node)->atomo,"n")==0||strcmp((*node)->atomo,"r")==0||strcmp((*node)->atomo,"[")==0){
@@ -913,9 +879,6 @@ void AP(struct token **node){
 void E(struct token **node){
     if (*node == NULL){
         rechaza("(|i|n|r|[","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"(")==0
         ||strcmp((*node)->atomo,"i")==0
         ||strcmp((*node)->atomo,"n")==0
@@ -932,9 +895,6 @@ void E(struct token **node){
 void EP(struct token **node){
     if (*node == NULL){
         rechaza("+|-|)|;","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"+")==0){
         nextAtom(node);
         T(node);
@@ -954,9 +914,6 @@ void EP(struct token **node){
 void T(struct token **node){
     if (*node == NULL){
         rechaza("(|i|n|r|[","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"(")==0
         ||strcmp((*node)->atomo,"i")==0
         ||strcmp((*node)->atomo,"n")==0
@@ -973,9 +930,6 @@ void T(struct token **node){
 void TP(struct token **node){
     if (*node == NULL){
         rechaza("*|/|\\|%|^|)|;","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"*")==0){
         nextAtom(node);
         F(node);
@@ -1007,9 +961,6 @@ void TP(struct token **node){
 void F(struct token **node){
     if (*node == NULL){
         rechaza("(|i|n|r|[","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"(")==0){
         nextAtom(node);
         E(node);
@@ -1033,9 +984,6 @@ void F(struct token **node){
 void R(struct token **node){
     if (*node == NULL){
         rechaza("i|n|r|s","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
         RP(node);
@@ -1061,9 +1009,6 @@ void R(struct token **node){
 void RP(struct token **node){
     if (*node == NULL){
         rechaza(">|<|l|e|d|u","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,">")==0
         ||strcmp((*node)->atomo,"<")==0
         ||strcmp((*node)->atomo,"l")==0
@@ -1080,9 +1025,6 @@ void RP(struct token **node){
 void V(struct token **node){
     if (*node == NULL){
         rechaza("i|n|r|s","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0
         ||strcmp((*node)->atomo,"n")==0
         ||strcmp((*node)->atomo,"r")==0
@@ -1097,9 +1039,6 @@ void V(struct token **node){
 void VP(struct token **node){
     if (*node == NULL){
         rechaza("n|i","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"n")==0||strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
     }else{
@@ -1111,9 +1050,6 @@ void VP(struct token **node){
 void VPP(struct token **node){
     if (*node == NULL){
         rechaza("r|i","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"r")==0||strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
     }else{
@@ -1125,9 +1061,6 @@ void VPP(struct token **node){
 void VPPP(struct token **node){
     if (*node == NULL){
         rechaza("s|i","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"s")==0||strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
     }else{
@@ -1139,9 +1072,6 @@ void VPPP(struct token **node){
 void P(struct token **node){
     if (*node == NULL){
         rechaza("i|f|h|w|j|[|z|c","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0){
         A(node);
     }else if(strcmp((*node)->atomo,"f")==0){
@@ -1172,9 +1102,6 @@ void P(struct token **node){
 void listaP(struct token **node){
     if (*node == NULL){
         rechaza("}|:|q|a|t|o|i|f|h|w|j|[|z|c","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"}")==0
         ||strcmp((*node)->atomo,":")==0
         ||strcmp((*node)->atomo,"q")==0
@@ -1201,9 +1128,6 @@ void listaP(struct token **node){
 void W(struct token **node){
     if (*node == NULL){
         rechaza("w","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"w")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"(")==0){
@@ -1242,9 +1166,6 @@ void W(struct token **node){
 void I(struct token **node){
     if (*node == NULL){
         rechaza("f","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"f")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"(")==0){
@@ -1274,9 +1195,6 @@ void I(struct token **node){
 void IP(struct token **node){
     if (*node == NULL){
         rechaza("t|:","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"t")==0){
         nextAtom(node);
         listaP(node);
@@ -1291,9 +1209,6 @@ void IP(struct token **node){
 void J(struct token **node){
     if (*node == NULL){
         rechaza("j","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"j")==0){
         nextAtom(node);
          if (strcmp((*node)->atomo,"(")==0){
@@ -1324,9 +1239,6 @@ void J(struct token **node){
 void Y(struct token **node){
     if (*node == NULL){
         rechaza("i|;","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"=")==0){
@@ -1351,9 +1263,6 @@ void Y(struct token **node){
 void X(struct token **node){
     if (*node == NULL){
         rechaza("i|n|r|s|;","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0
         ||strcmp((*node)->atomo,"n")==0
         ||strcmp((*node)->atomo,"r")==0
@@ -1375,9 +1284,6 @@ void X(struct token **node){
 void Z(struct token **node){
     if (*node == NULL){
         rechaza("i|)","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"=")==0){
@@ -1402,9 +1308,6 @@ void Z(struct token **node){
 void H(struct token **node){
     if (*node == NULL){
         rechaza("h","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"h")==0){
         nextAtom(node);
          if (strcmp((*node)->atomo,"(")==0){
@@ -1443,9 +1346,6 @@ void H(struct token **node){
 void CP(struct token **node){
     if (*node == NULL){
         rechaza("a|}|o","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"a")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"n")==0){
@@ -1473,9 +1373,6 @@ void CP(struct token **node){
 void OP(struct token **node){
     if (*node == NULL){
         rechaza("o|}","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"o")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,":")==0){
@@ -1495,9 +1392,6 @@ void OP(struct token **node){
 void U(struct token **node){
     if (*node == NULL){
         rechaza("q|a|}|o","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"q")==0){
         nextAtom(node);
     }else if(strcmp((*node)->atomo,"a")==0
@@ -1513,9 +1407,6 @@ void U(struct token **node){
 void Devuelve(struct token **node){
     if (*node == NULL){
         rechaza("z","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"z")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"(")==0){
@@ -1543,9 +1434,6 @@ void Devuelve(struct token **node){
 void valor(struct token **node){
     if (*node == NULL){
         rechaza("i|n|r|s|)","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"i")==0
         ||strcmp((*node)->atomo,"n")==0
         ||strcmp((*node)->atomo,"r")==0
@@ -1562,9 +1450,6 @@ void valor(struct token **node){
 void Llama(struct token **node){
     if (*node == NULL){
         rechaza("[","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,"[")==0){
         nextAtom(node);
         if (strcmp((*node)->atomo,"i")==0){
@@ -1597,9 +1482,6 @@ void Llama(struct token **node){
 void arg(struct token **node){
     if (*node == NULL){
         rechaza(")|i|n|r|s","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,")")==0){
         //produccion epsilon, no tiene instrucciones.
     }else if (strcmp((*node)->atomo,"i")==0
@@ -1617,9 +1499,6 @@ void arg(struct token **node){
 void otroArg(struct token **node){
     if (*node == NULL){
         rechaza(",|)","EOF",node);
-        *node = referenceTokenTable;
-        printf("%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
-        exit(-1);
     }else if(strcmp((*node)->atomo,",")==0){
         nextAtom(node);
         V(node);
@@ -1635,6 +1514,16 @@ void otroArg(struct token **node){
 */
 void rechaza(char *a, char *b,struct token **node){
     flagCorrectSintact=false;
-    printf("%s: error (%d): \"Se esperaba %s en lugar de %s\" :Formato Sintactico No Valido\n\n",nameFile,conteoAtom,a,b);
-    nextAtom(node);
+    if (*node == NULL){
+        *node = referenceTokenTable;
+        printf("%s:EOF: error (%d): Se esperaba \"%s\" en lugar de \"%s\" :Formato Sintactico No Valido\n\n",nameFile,countAtom,a,b);
+        outputFile = fopen("outputFile.txt","a+");              //Se abre el archivo de salida
+        fprintf(outputFile,"\n%s: message: \"Programa fuente sintácticamente INCORRECTO\"\n\n",nameFile);
+        fclose(outputFile);                                     //Se cierra el archivo de salida
+        freeTables();                                           //Se libera la memoria reservada de las tablas
+        exit(-1);
+    }else{
+        printf("%s:%d: error (%d): Se esperaba \"%s\" en lugar de \"%s\" :Formato Sintactico No Valido\n\n",nameFile,(*node)->line,countAtom,a,b);
+        nextAtom(node);
+    }
 }
